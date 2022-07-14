@@ -1,0 +1,29 @@
+import React from "react"; 
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import "./App.css";
+import { StoreProvider } from "./utils/GlobalState";
+import Home from './pages/Home';
+import { Login, Register, Logout } from "./components/Auth"; 
+import Landing from "./pages/Landing";
+import PrivateRoute from './components/PrivateRoute'
+import PublicRoute from './components/PublicRoute'
+
+function App() {
+  
+  return (
+    <Router>
+      <StoreProvider>      
+              <Switch>              
+                <PublicRoute restricted={false} exact path='/' component={Landing} />
+                <PublicRoute restricted={true} path="/login" component={Login} />
+                <Route path="/register" component={Register} />
+                <Route path="/logout" component={Logout} />
+                <PrivateRoute exact path="/home" component={Home} />
+                <Route path="*" component={Landing} />
+              </Switch>
+      </StoreProvider>
+    </Router> 
+  );
+}
+
+export default App;
